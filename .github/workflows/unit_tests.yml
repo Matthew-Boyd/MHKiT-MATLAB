@@ -2,9 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master, develop, cdip_testing_ci ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master, develop, cdip_testing_ci ]
 
 jobs:
   main:
