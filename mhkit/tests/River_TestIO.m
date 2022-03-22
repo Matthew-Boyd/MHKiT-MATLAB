@@ -32,11 +32,10 @@ classdef River_TestIO < matlab.unittest.TestCase
         end
 
         function test_request_usgs_data_instant(testCase)
-            % Querying only one day to avoid USGS query limit and thus failed test
-            data=request_usgs_data("15515500","00060","2009-08-01","2009-08-01","data_type",'Instantaneous');
+            data=request_usgs_data("15515500","00060","2009-08-01","2009-08-10","data_type",'Instantaneous');
             
             assertEqual(testCase,data.units, struct('Discharge'," cubic feet per second"));
-            assertEqual(testCase,size(data.Discharge), [1*24*4 1]);
+            assertEqual(testCase,size(data.Discharge), [10*24*4 1]);
         end
     end
 end
