@@ -32,10 +32,23 @@ classdef River_TestIO < matlab.unittest.TestCase
         end
 
         function test_request_usgs_data_instant(testCase)
-            data=request_usgs_data("15515500","00060","2009-08-01","2009-08-10","data_type",'Instantaneous');
+            % Select a random day and pause a random duration before running
+            % to avoid simultaneous queries of the same data during CI job runs
+            date_range = [datetime(2009, 8, 1) ...
+                          datetime(2009, 8, 27)];
+
+            n_dates = days(date_range(2) - date_range(1)) + 1;
+            random_date_num = randi([1 n_dates], 1);
+            start_date = date_range(1) + days(random_date_num) - 1;
+            start_date_string = string(datestr(start_date, "yyyy-mm-dd"));
+            end_date_string = start_date_string;
+            
+            pause(rand()*5);
+            data=request_usgs_data("15515500","00060",start_date_string,end_date_string,"data_type",'Instantaneous');
             
             assertEqual(testCase,data.units, struct('Discharge'," cubic feet per second"));
-            assertEqual(testCase,size(data.Discharge), [10*24*4 1]);
+            assertEqual(testCase,size(data.Discharge), [1*24*4 1]);
+            start_date = start_date + days(1);
         end
     end
 end
