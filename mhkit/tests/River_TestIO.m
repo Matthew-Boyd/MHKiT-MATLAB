@@ -42,13 +42,12 @@ classdef River_TestIO < matlab.unittest.TestCase
             start_date = date_range(1) + days(random_date_num) - 1;
             start_date_string = string(datestr(start_date, "yyyy-mm-dd"));
             end_date_string = start_date_string;
-            
-            pause(rand()*5);
+
+            pause(rand()*15);
             data=request_usgs_data("15515500","00060",start_date_string,end_date_string,"data_type",'Instantaneous');
             
             assertEqual(testCase,data.units, struct('Discharge'," cubic feet per second"));
             assertEqual(testCase,size(data.Discharge), [1*24*4 1]);
-            start_date = start_date + days(1);
         end
     end
 end
